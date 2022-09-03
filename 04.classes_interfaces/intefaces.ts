@@ -3,9 +3,10 @@
 // type and interface is not same but we can use them interchangebly
 // major defference in interface is used describe the structure of object
 // but with type we can add more flexible like use union etc
+// `?` used for optional properties;
 
 interface Person {
-    name: string; // name: string = 'Max' -> it will threw an error interfaces can't be initailise or can't have defaults.
+    readonly name: string; // name: string = 'Max' -> it will threw an error interfaces can't be initailise or can't have defaults.
     age: number;
 
     greet(phrase: string): void;
@@ -35,7 +36,14 @@ class PersonNew implements Greetable {
     }
 }
 
-interface Greetable {
+interface Named {
+    readonly name: string;
+
+    outputName?: string; // it ? will for options property
+}
+
+// we can inherit from multiple interfaces => `interface Greetable extends Named, AnotherInterfaces,.. {}
+interface Greetable extends Named {
     name: string;
 
     greet(phrase: string): void;
@@ -49,3 +57,16 @@ user2 = {
         console.log(phrase + ' ' + this.name)
     }
 }
+
+
+// ex-3 interface for custom function types.
+// 1 way
+// type Addfn = (a: number, b: number ) => number;
+
+// 2 way
+interface AddFn {
+    (a: number, b: number): number;
+}
+
+let add: AddFn;
+add = (n1: number, n2: number) => n1 + n2;
